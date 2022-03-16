@@ -14,19 +14,17 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.views import TokenObtainPairView
+from reviews.models import (Category, Comment, ConfirmationCode, Genre, Review,
+                            Title, User)
 
-from reviews.models import (
-    Category, Comment, ConfirmationCode, Genre, Review, Title, User,
-)
 from .filters import TitleFilter
-from .permissions import (
-    IsAdminOrReadOnly, IsAdminPermission, ReviewsAndCommentsPermissions,
-)
-from .serializers import (
-    CategorySerializer, CommentSerializer, GenreSerializer,
-    RegistrationSerializer, ReviewSerializer, TitleCreateSerializer,
-    TitleSerializer, TokenObtainPairCustomSerializer, UserSerializer,
-)
+from .permissions import (IsAdminOrReadOnly, IsAdminPermission,
+                          ReviewsAndCommentsPermissions)
+from .serializers import (CategorySerializer, CommentSerializer,
+                          GenreSerializer, RegistrationSerializer,
+                          ReviewSerializer, TitleCreateSerializer,
+                          TitleSerializer, TokenObtainPairCustomSerializer,
+                          UserSerializer)
 
 
 class TokenObtainPairCustomView(TokenObtainPairView):
@@ -150,8 +148,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         title_id = self.kwargs.get('title_id')
         title = get_object_or_404(Title, id=title_id)
-        new_queryset = title.reviews.all()
-        return new_queryset
+        return title.reviews.all()
 
     def perform_create(self, serializer):
         title_id = self.kwargs.get('title_id')
@@ -167,8 +164,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         review_id = self.kwargs.get('review_id')
         review = get_object_or_404(Review, id=review_id)
-        new_queryset = Comment.objects.filter(review=review)
-        return new_queryset
+        return Comment.objects.filter(review=review)
 
     def perform_create(self, serializer):
         review_id = self.kwargs.get('review_id')

@@ -1,5 +1,4 @@
 from rest_framework.exceptions import NotFound, ValidationError
-
 from reviews.models import ConfirmationCode, User
 
 
