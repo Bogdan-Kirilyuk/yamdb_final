@@ -54,4 +54,5 @@ sudo docker-compose exec web python manage.py collectstatic --no-input
 sudo docker-compose down -v 
 ``` 
 
+
 Автор: Студент факультета "Python-разработчик" Яндекс.практикума, когорта 21. Богдан Кирилюк.
